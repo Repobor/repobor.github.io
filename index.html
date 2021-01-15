@@ -146,6 +146,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/15/Ubuntu%EF%BC%88WSL%EF%BC%89%E7%BC%96%E8%AF%91N1%E7%9A%84OpenWrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Repobor">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/15/Ubuntu%EF%BC%88WSL%EF%BC%89%E7%BC%96%E8%AF%91N1%E7%9A%84OpenWrt/" class="post-title-link" itemprop="url">Ubuntu（WSL）编译N1的OpenWrt</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-15 12:41:05 / Modified: 12:41:41" itemprop="dateCreated datePublished" datetime="2021-01-15T12:41:05+08:00">2021-01-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Ubuntu（WSL）编译N1的OpenWrt"><a href="#Ubuntu（WSL）编译N1的OpenWrt" class="headerlink" title="Ubuntu（WSL）编译N1的OpenWrt"></a>Ubuntu（WSL）编译N1的OpenWrt</h1><ol>
+<li>安装依赖<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync</span><br></pre></td></tr></table></figure></li>
+<li>克隆源码<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/coolsnowwolf/lede</span><br></pre></td></tr></table></figure></li>
+<li>更新和安装Feeds<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd lede</span><br><span class="line">echo &quot;src-git lienol https://github.com/Lienol/openwrt-package&quot; &gt;&gt; feeds.conf.default #非必须，如果需要其奇奇怪的插件建议加上</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br></pre></td></tr></table></figure></li>
+<li>配置config并编译</li>
+<li>首次编译<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig #根据编译的设备定制配置文件</span><br><span class="line">make -j8 download v=s</span><br><span class="line">make -j1 V=s #第一次推荐使用单线程 23.30 04.37 5h07min</span><br></pre></td></tr></table></figure></li>
+<li>再次编译<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd lede</span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a &amp;&amp; ./scripts/feeds install -a</span><br><span class="line">make defconfig</span><br><span class="line">make -j8 download</span><br><span class="line">make -j$(($(nproc) + 1)) V=s</span><br></pre></td></tr></table></figure></li>
+<li>如果需要重新配置<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ./tmp &amp;&amp; rm -rf .config</span><br><span class="line">make menuconfig</span><br><span class="line">make -j$(($(nproc) + 1)) V=s</span><br></pre></td></tr></table></figure>
+编译完成路径在/lede/bin/targets<br>在WSL可能遇到环境变量导致的报错</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://my.oschina.net/pblack/blog/3209969">https://my.oschina.net/pblack/blog/3209969</a></p>
+<p>自用插件克隆</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Mrbai98/luci-theme-atmaterial.git openwrt/package/luci-theme-atmaterial</span><br><span class="line">git clone https://github.com/rufengsuixing/luci-app-adguardhome.git openwrt/package/luci-app-adguardhome &amp;&amp; echo &quot;#https://cdn.jsdelivr.net/gh/AdguardTeam/AdGuardHome/AdGuardHome_linux_$&#123;Arch&#125;.tar.gz&quot; &gt; openwrt/package/luci-app-adguardhome/root/usr/share/AdGuardHome/links.txt</span><br><span class="line">git clone https://github.com/pymumu/smartdns.git openwrt/package/smartdns</span><br><span class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/Apocalypsor/luci-app-smartdns.git openwrt/package/luci-app-smartdns</span></span><br><span class="line">git clone https://github.com/Repobor/luci-app-smartdns.git openwrt/package/luci-app-smartdns</span><br><span class="line">git clone https://github.com/frainzy1477/luci-app-clash.git openwrt/package/luci-app-clash</span><br><span class="line"><span class="meta">#</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/Leo-Jo/luci-app-koolproxyR.git openwrt/package/luci-app-koolproxyR</span></span><br><span class="line">git clone https://github.com/Repobor/luci-app-koolproxyR.git openwrt/package/luci-app-koolproxyR</span><br><span class="line">git clone https://github.com/vernesong/OpenClash.git &amp;&amp; mv OpenClash/luci-app-openclash openwrt/package/luci-app-openclash</span><br><span class="line">git clone https://github.com/tty228/luci-app-serverchan.git lede/package/luci-app-serverchan</span><br></pre></td></tr></table></figure>
+<p>配置固化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lede\package\base-files\files\bin\config_generate</span><br><span class="line">IP地址修改</span><br><span class="line"></span><br><span class="line">lede\package\network\config\firewall\files\firewall.user</span><br><span class="line">防火墙规则</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/04/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -274,7 +346,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
