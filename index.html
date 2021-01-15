@@ -171,7 +171,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-15 12:41:05 / Modified: 12:41:41" itemprop="dateCreated datePublished" datetime="2021-01-15T12:41:05+08:00">2021-01-15</time>
+              <time title="Created: 2021-01-15 12:41:05 / Modified: 12:43:23" itemprop="dateCreated datePublished" datetime="2021-01-15T12:41:05+08:00">2021-01-15</time>
             </span>
 
           
@@ -185,7 +185,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Ubuntu（WSL）编译N1的OpenWrt"><a href="#Ubuntu（WSL）编译N1的OpenWrt" class="headerlink" title="Ubuntu（WSL）编译N1的OpenWrt"></a>Ubuntu（WSL）编译N1的OpenWrt</h1><ol>
+          <a id="more"></a>
+<ol>
 <li>安装依赖<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync</span><br></pre></td></tr></table></figure></li>
 <li>克隆源码<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/coolsnowwolf/lede</span><br></pre></td></tr></table></figure></li>
 <li>更新和安装Feeds<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd lede</span><br><span class="line">echo &quot;src-git lienol https://github.com/Lienol/openwrt-package&quot; &gt;&gt; feeds.conf.default #非必须，如果需要其奇奇怪的插件建议加上</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br></pre></td></tr></table></figure></li>
