@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as _}from"./app.fedcc678.js";const l=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"articles/02-运维/01-Linux/06-管道、环境变量与常用命令.md","lastUpdated":null}'),a={name:"articles/02-运维/01-Linux/06-管道、环境变量与常用命令.md"};function r(s,n,c,o,i,p){return t(),_("div")}const m=e(a,[["render",r]]);export{l as __pageData,m as default};

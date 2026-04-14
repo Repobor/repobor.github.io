@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as a}from"./app.fedcc678.js";const d=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"articles/02-运维/01-Linux/03-shell语法.md","lastUpdated":null}'),s={name:"articles/02-运维/01-Linux/03-shell语法.md"};function r(n,c,l,o,_,i){return t(),a("div")}const m=e(s,[["render",r]]);export{d as __pageData,m as default};
